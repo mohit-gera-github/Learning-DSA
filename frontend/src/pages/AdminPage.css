@@ -1,0 +1,188 @@
+.admin-wrapper {
+  background-color: #0f0f1a;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  padding: 20px 40px;
+  background-color: #1a1a2e;
+  border-bottom: 1px solid #2a2a4a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-title h2 {
+  font-family: 'Space Mono', monospace;
+  margin: 0;
+}
+
+.admin-title p {
+  color: #6c63ff;
+  font-size: 0.8rem;
+  margin: 5px 0 0 0;
+}
+
+.admin-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 300px;
+  background-color: #16162a;
+  border-right: 1px solid #2a2a4a;
+  padding: 20px;
+}
+
+.admin-sidebar h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #a3a3c2;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-item {
+  padding: 12px 15px;
+  background-color: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.sidebar-item:hover {
+  border-color: #6c63ff;
+}
+
+.sidebar-item.active {
+  background-color: #6c63ff;
+  border-color: #6c63ff;
+}
+
+.mini-del {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.mini-del:hover { opacity: 1; }
+
+/* Main Content */
+.admin-main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.detail-title h3 {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.detail-title p {
+  color: #a3a3c2;
+  margin: 5px 0 0 0;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1a2e;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table th {
+  background-color: #2a2a4a;
+  text-align: left;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: #a3a3c2;
+}
+
+.admin-table td {
+  padding: 15px;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.diff-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.diff-dot.easy { background-color: #4ade80; }
+.diff-dot.medium { background-color: #facc15; }
+.diff-dot.hard { background-color: #f87171; }
+
+.empty-row {
+  text-align: center;
+  color: #a3a3c2;
+  padding: 40px ! from table;
+}
+
+.no-selection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #2a2a4a;
+  text-align: center;
+}
+
+.no-selection h3 { margin-top: 20px; }
+
+/* Modal & Buttons (Shared with existing styles) */
+.btn-add { background-color: #6c63ff; border: none; padding: 10px 20px; border-radius: 6px; color: white; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.btn-logout { background-color: #2a2a4a; border: none; padding: 10px 20px; border-radius: 6px; color: #a3a3c2; cursor: pointer; margin-left: 10px; }
+.btn-logout:hover { color: #ff4d4d; }
+.btn-del { background: none; border: none; color: #ff4d4d; cursor: pointer; }
+
+/* Modals */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { background-color: #1a1a2e; padding: 30px; border-radius: 12px; width: 450px; border: 1px solid #2a2a4a; }
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center; }
+.modal-header h3 { margin: 0; font-family: 'Space Mono', monospace; }
+.modal-header button { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; }
+form input, form textarea, form select { width: 100%; margin-bottom: 15px; padding: 12px; background: #0f0f1a; border: 1px solid #2a2a4a; color: white; border-radius: 6px; font-family: 'Inter', sans-serif; }
+.submit-btn { width: 100%; padding: 14px; background: #6c63ff; border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: 700; }
+
+/* Confirm Modal */
+.confirm-modal { text-align: center; border: 2px solid #ff4d4d; }
+.warning-msg { color: #ff4d4d; font-weight: 700; margin-bottom: 10px; }
+.danger-text { background: rgba(255, 77, 77, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem; }
+.confirm-form { text-align: left; margin: 20px 0; }
+.confirm-form label { display: block; font-size: 0.8rem; color: #a3a3c2; margin-bottom: 5px; }
+.modal-error { color: #ff4d4d; font-size: 0.8rem; margin-top: 5px; }
+.modal-actions { display: flex; gap: 10px; }
+.btn-cancel { flex: 1; padding: 12px; background: #2a2a4a; border: none; color: white; border-radius: 6px; cursor: pointer; }
+.btn-confirm-delete { flex: 1; padding: 12px; background: #ff4d4d; border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: 600; }

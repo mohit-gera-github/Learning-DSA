@@ -1,0 +1,140 @@
+.topic-view-wrapper {
+  background-color: #0f0f1a;
+  min-height: 100vh;
+  padding: 40px 0;
+  color: white;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: #6c63ff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-family: 'Space Mono', monospace;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.back-link:hover {
+  opacity: 1;
+}
+
+.topic-hero {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.topic-icon-display {
+  font-size: 5rem;
+}
+
+.topic-info-display h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: 3rem;
+  margin: 0 0 10px 0;
+}
+
+.topic-info-display p {
+  color: #a3a3c2;
+  font-size: 1.1rem;
+}
+
+/* Problems Grid */
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.problem-card {
+  background-color: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  padding: 25px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-family: 'Space Mono', monospace;
+}
+
+.badge-difficulty {
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-difficulty.easy { background-color: rgba(74, 222, 128, 0.1); color: #4ade80; }
+.badge-difficulty.medium { background-color: rgba(250, 204, 21, 0.1); color: #facc15; }
+.badge-difficulty.hard { background-color: rgba(248, 113, 113, 0.1); color: #f87171; }
+
+.problem-preview {
+  color: #a3a3c2;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #2a2a4a;
+  padding-top: 15px;
+}
+
+.animation-tag {
+  font-size: 0.75rem;
+  color: #6c63ff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.arrow-icon {
+  color: #2a2a4a;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 100px;
+  color: #6c63ff;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.5rem;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  color: #a3a3c2;
+  border: 1px dashed #2a2a4a;
+  border-radius: 12px;
+}
