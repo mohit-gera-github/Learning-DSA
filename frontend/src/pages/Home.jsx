@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaCog } from 'react-icons/fa';
+import Spinner from '../components/Spinner';
 import './Home.css';
 
 const Home = () => {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const [topicsRes, problemsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/topics'),
-        axios.get('http://localhost:5000/api/problems')
+        axios.get(`${apiUrl}/api/topics`),
+        axios.get(`${apiUrl}/api/problems`)
       ]);
 
       const topicsWithCounts = topicsRes.data.data.map(topic => ({
@@ -34,10 +37,16 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="loading-grid">Loading topics...</div>;
+  if (loading) return <Spinner />;
 
   return (
-    <div className="home-wrapper">
+    <motion.div 
+      className="home-wrapper"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <header className="home-header">
         <h2>Explore DSA Topics</h2>
       </header>
@@ -57,7 +66,11 @@ const Home = () => {
           </motion.div>
         ))}
       </div>
-    </div>
+
+      <Link to="/admin-login" className="admin-trigger-icon">
+        <FaCog />
+      </Link>
+    </motion.div>
   );
 };
 

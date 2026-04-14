@@ -32,19 +32,23 @@ const problemSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: [
-      'array-traversal', 
-      'sorting', 
+      'bubble-sort',
+      'selection-sort',
+      'insertion-sort',
+      'binary-search',
+      'two-pointer',
+      'array-traversal',
       'tree', 
       'graph', 
       'stack-queue', 
       'string', 
-      'two-pointer', 
       'sliding-window'
     ]
   },
   algorithmSteps: [{
     stepIndex: { type: Number, required: true },
     description: { type: String, required: true },
+    arrayState: [Number],
     highlightIndices: [Number],
     swapIndices: [Number], 
     pointerPositions: {

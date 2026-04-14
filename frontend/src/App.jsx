@@ -1,6 +1,6 @@
 import React from 'react';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
-import { FaCog } from 'react-icons/fa';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { AppProvider } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -8,6 +8,7 @@ import TopicPage from './pages/TopicPage';
 import ProblemPage from './pages/ProblemPage';
 import AdminPage from './pages/AdminPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -16,32 +17,31 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
+  const location = useLocation();
+
   return (
     <AppProvider>
       <div className="App">
         <Navbar />
         <main className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/topic/:slug" element={<TopicPage />} />
-            <Route path="/problem/:id" element={<ProblemPage />} />
-            <Route path="/admin-login" element={<AdminLoginPage />} />
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute>
-                  <AdminPage />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/topic/:slug" element={<TopicPage />} />
+              <Route path="/problem/:id" element={<ProblemPage />} />
+              <Route path="/admin-login" element={<AdminLoginPage />} />
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute>
+                    <AdminPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AnimatePresence>
         </main>
-        <footer className="footer">
-          <p>&copy; 2026 DSA Visual Learn</p>
-          <Link to="/admin-login" className="admin-trigger">
-            <FaCog />
-          </Link>
-        </footer>
       </div>
     </AppProvider>
   );

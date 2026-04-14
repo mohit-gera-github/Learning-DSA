@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaChevronRight } from 'react-icons/fa';
+import Spinner from '../components/Spinner';
 import './TopicPage.css';
 
 const TopicPage = () => {
@@ -11,13 +12,13 @@ const TopicPage = () => {
   const [topic, setTopic] = useState(null);
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchTopicData = async () => {
       try {
         setLoading(true);
-        // 1. Find topic by slug
-        const topicsRes = await axios.get('http://localhost:5000/api/topics');
+        const topicsRes = await axios.get(`${apiUrl}/api/topics`);
         const currentTopic = topicsRes.data.data.find(t => t.slug === slug);
         
         if (!currentTopic) {
@@ -26,8 +27,7 @@ const TopicPage = () => {
         }
         setTopic(currentTopic);
 
-        // 2. Fetch problems for this topic
-        const problemsRes = await axios.get(`http://localhost:5000/api/problems?topicId=${currentTopic._id}`);
+        const problemsRes = await axios.get(`${apiUrl}/api/problems?topicId=${currentTopic._id}`);
         setProblems(problemsRes.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -37,12 +37,18 @@ const TopicPage = () => {
     };
 
     fetchTopicData();
-  }, [slug, navigate]);
+  }, [slug, navigate, apiUrl]);
 
-  if (loading) return <div className="loading-state">Loading Problems...</div>;
+  if (loading) return <Spinner />;
 
   return (
-    <div className="topic-view-wrapper">
+    <motion.div 
+      className="topic-view-wrapper"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="container">
         <button className="back-link" onClick={() => navigate('/')}>
           <FaArrowLeft /> <span>Topics</span>
@@ -87,7 +93,7 @@ const TopicPage = () => {
           )}
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

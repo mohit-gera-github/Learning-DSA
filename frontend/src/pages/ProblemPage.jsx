@@ -14,6 +14,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAnimation } from '../animations/useAnimation';
 import ArrayVisualizer from '../animations/ArrayVisualizer.jsx';
+import Spinner from '../components/Spinner';
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -25,11 +26,12 @@ const ProblemPage = () => {
   const [isCodeCollapsed, setIsCodeCollapsed] = useState(true);
   const [activeLang, setActiveLang] = useState('javascript');
   const [speed, setSpeed] = useState(500);
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchProblem = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/problems/${id}`);
+        const response = await axios.get(`${apiUrl}/api/problems/${id}`);
         setProblem(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -38,17 +40,10 @@ const ProblemPage = () => {
       }
     };
     fetchProblem();
-  }, [id]);
+  }, [id, apiUrl]);
 
   const steps = useMemo(() => {
-    if (!problem) return [{ 
-      array: [], 
-      highlightIndices: [], 
-      swapIndices: [], 
-      pointerPositions: {}, 
-      description: "Loading..." 
-    }];
-    
+    if (!problem) return [];
     return problem.algorithmSteps || [];
   }, [problem]);
 
@@ -86,12 +81,18 @@ const ProblemPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPlaying, play, pause, next, prev]);
 
-  if (loading) return <div style={styles.statusContainer}>Loading problem...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div style={styles.statusContainer}>{error}</div>;
   if (!problem) return <div style={styles.statusContainer}>Problem not found</div>;
 
   return (
-    <div style={styles.pageWrapper}>
+    <motion.div 
+      style={styles.pageWrapper}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <header style={styles.topBar}>
         <div style={styles.headerLeft}>
           <button onClick={() => navigate(-1)} style={styles.backButton}>
@@ -138,7 +139,7 @@ const ProblemPage = () => {
         <section style={styles.rightPanel}>
           <div style={styles.vizContainer}>
             <ArrayVisualizer 
-              array={currentStep?.array || problem.testCases[activeTestCaseIndex]?.input || []}
+              array={currentStep?.arrayState || problem.testCases[activeTestCaseIndex]?.input[0] || []}
               highlightIndices={currentStep?.highlightIndices}
               swapIndices={currentStep?.swapIndices}
               pointerPositions={currentStep?.pointerPositions}
@@ -213,7 +214,7 @@ const ProblemPage = () => {
           </div>
         )}
       </footer>
-    </div>
+    </motion.div>
   );
 };
 
